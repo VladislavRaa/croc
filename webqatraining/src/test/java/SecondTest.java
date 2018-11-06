@@ -3,8 +3,18 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
+
+
 
 public class SecondTest extends BaseRunner {
+    private List<WebElement> xpathSearcherByText(String searchText) {
+        String xpath = String.format("//*[contains(text(),'%s')]", searchText);
+        return driver.findElements(By.xpath(xpath));
+    }
 
     @Test
     public void testEmptyFields() {
@@ -27,7 +37,7 @@ public class SecondTest extends BaseRunner {
         driver.get("https://moscow-job.tinkoff.ru/");
         driver.findElement(By.cssSelector("[name=\"fio\"]")).sendKeys("fail_fio");
         driver.findElement(By.cssSelector("[name=\"email\"]")).sendKeys("fail_mail");
-        assertEquals("Недостаточно информации. Введите фамилию, имя и отчество через пробел (Например: Иванов Иван Алексеевич)",driver.findElement(By.cssSelector("div.Error__errorMessage_q8BBY")).getText());
+        assertEquals("Недостаточно информации. Введите фамилию, имя и отчество через пробел (Например: Иванов Иван Алексеевич)", driver.findElement(By.cssSelector("div.Error__errorMessage_q8BBY")).getText());
         driver.findElement(By.cssSelector("[name=\"phone\"]")).sendKeys("+7 (111) 111-11-11");
         assertEquals("Введите корректный адрес эл. почты", driver.findElement(By.cssSelector(".Row__row_AjrJL:nth-child(2) > .FormField__field_1iwkM:nth-child(1) > .Error__errorMessage_q8BBY")).getText());
         driver.findElement(By.cssSelector("[name=\"city\"]")).sendKeys("fa1l");
@@ -36,5 +46,36 @@ public class SecondTest extends BaseRunner {
         assertEquals("Допустимо использовать только буквы русского, латинского алфавита и дефис", driver.findElement(By.cssSelector(".Row__row_AjrJL:nth-child(3) > .FormField__field_1iwkM:nth-child(1) > .Error__errorMessage_q8BBY")).getText());
         driver.findElement(By.cssSelector("[name=\"city\"]")).click();
         assertEquals("Поле обязательное", driver.findElement(By.cssSelector(".Row__row_AjrJL:nth-child(4) > .FormField__field_1iwkM:nth-child(1) > .Error__errorMessage_q8BBY")).getText());
+    }
+
+    @Test
+    public void case1() {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        driver.get("https://www.google.ru/");
+        driver.findElement(By.name("q")).sendKeys("мобайл тинькофф тарифы");
+        driver.findElements(By.xpath("//ul[@role='listbox']/li"));
+
+
+        wait
+                .ignoring(StaleElementReferenceException.class)
+                .withMessage("Что-то пошло не так...")
+                .pollingEvery(Duration.ofMillis(500))
+                .until(d -> {
+                    By listItems = By.xpath("//ul[@role='listbox']/li[@role='presentation' and .//*[@role='option']]");
+                    List<WebElement> elements = driver.findElements(listItems);
+                    for (WebElement el : elements) {
+                        if (el.getText().equals("мобайл тинькофф тарифы")) el.click();
+                        break;
+                    }
+                    return d.getTitle().equals("мобайл тинькофф тарифы - Поиск в Google");
+                });
+        wait.until(d -> driver.findElements(By.cssSelector("a[href*='https://www.tinkoff.ru/mobile-operator/tariffs/']")).size() > 0);
+        driver.findElement(By.cssSelector("a[href*='https://www.tinkoff.ru/mobile-operator/tariffs/']")).click();
+        driver.get("https://www.tinkoff.ru/mobile-operator/tariffs/");
+        assertEquals("Тарифы Тинькофф Мобайл", driver.findElement(By.cssSelector("span[data-qa-file=\"DangerouslyHTML\"][class=\"DangerouslyHTML__box_2ds8q\"]")).getText());
+        driver.switchTo().window(driver.getWindowHandles().iterator().next());
+        driver.close();
+        driver.switchTo().window(driver.getWindowHandles().iterator().next());
+        wait.until(d -> driver.getCurrentUrl().equals("https://www.tinkoff.ru/mobile-operator/tariffs/"));
     }
 }
