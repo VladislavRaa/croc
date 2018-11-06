@@ -78,4 +78,47 @@ public class SecondTest extends BaseRunner {
         driver.switchTo().window(driver.getWindowHandles().iterator().next());
         wait.until(d -> driver.getCurrentUrl().equals("https://www.tinkoff.ru/mobile-operator/tariffs/"));
     }
+    @Test
+    public void case2() {
+        driver.get("https://www.tinkoff.ru/mobile-operator/tariffs/");
+        driver.findElement(By.cssSelector("span.MvnoRegionConfirmation__option_3mrvz.MvnoRegionConfirmation__optionAgreement_3M5qT")).click();
+        assertEquals("Москва и Московская область",driver.findElement(By.cssSelector("div.MvnoRegionConfirmation__title_3WFCP")).getText());
+        driver.navigate().refresh();
+        assertEquals("Москва и Московская область",driver.findElement(By.cssSelector("div.MvnoRegionConfirmation__title_3WFCP")).getText());
+        String priceMsk = driver.findElement(By.cssSelector("[data-qa-file=\'UITitle\'][class=\'ui-title ui-title_form ui-title_center ui-title_size_s MobileOperatorFormFieldTitle__title_2awZp mobileOperatorProductCalculatorSchema__amountTitle_6kgKn\']")).getText();
+        driver.findElement(By.cssSelector("[data-qa-file=\'MvnoRegionConfirmation\'][class=\'MvnoRegionConfirmation__wrapper_3Qh_H MvnoRegionConfirmation__wrapperSelected_1X_zH\']")).click();
+        driver.findElement(By.xpath("//*[contains(text(),'Краснодар')]")).click();
+        driver.navigate().refresh();
+        String priceKrasnodar = driver.findElement(By.cssSelector("[data-qa-file=\'UITitle\'][class=\'ui-title ui-title_form ui-title_center ui-title_size_s MobileOperatorFormFieldTitle__title_2awZp mobileOperatorProductCalculatorSchema__amountTitle_6kgKn\']")).getText();
+        assertNotEquals(priceKrasnodar, priceMsk);
+
+        driver.findElement(By.cssSelector("[data-qa-file=\'UISelectTitle\'][class=\'ui-select__title ui-select__title_columned\']")).click();
+        driver.findElement(By.cssSelector(".ui-form__row:nth-child(1) .ui-dropdown-field-list__item:nth-child(6) .ui-dropdown-field-list__item-text")).click();
+        driver.findElement(By.xpath("//div[@id='form-application']/div[2]/div/form/div/div[3]/div/div[2]/div/div/div/div/div/div/div[2]")).click();
+        driver.findElement(By.cssSelector(".ui-form__row:nth-child(2) .ui-dropdown-field-list__item:nth-child(6) .ui-dropdown-field-list__item-text")).click();
+        driver.findElement(By.cssSelector("[data-qa-file=\'UICheckbox\'][class=\'ui-checkbox \']")).click();
+        driver.findElement(By.xpath("//div[@id='form-application']/div[2]/div/form/div/div[5]/div/div[2]/div/div/div/div/label")).click();
+        String maxPriceKrasnodar = driver.findElement(By.cssSelector("[data-qa-file=\'UITitle\'][class=\'ui-title ui-title_form ui-title_center ui-title_size_s MobileOperatorFormFieldTitle__title_2awZp mobileOperatorProductCalculatorSchema__amountTitle_6kgKn\']")).getText();
+        //System.out.println(maxPriceKrasnodar);
+
+        driver.findElement(By.cssSelector("[data-qa-file=\'MvnoRegionConfirmation\'][class=\'MvnoRegionConfirmation__wrapper_3Qh_H MvnoRegionConfirmation__wrapperSelected_1X_zH\']")).click();
+        driver.findElement(By.xpath("//*[contains(text(),'Москва')]")).click();
+
+        driver.findElement(By.cssSelector("[data-qa-file=\'UISelectTitle\'][class=\'ui-select__title ui-select__title_columned\']")).click();
+        driver.findElement(By.cssSelector(".ui-form__row:nth-child(1) .ui-dropdown-field-list__item:nth-child(6) .ui-dropdown-field-list__item-text")).click();
+        driver.findElement(By.xpath("//div[@id='form-application']/div[2]/div/form/div/div[3]/div/div[2]/div/div/div/div/div/div/div[2]")).click();
+        driver.findElement(By.cssSelector(".ui-form__row:nth-child(2) .ui-dropdown-field-list__item:nth-child(6) .ui-dropdown-field-list__item-text")).click();
+        driver.findElement(By.cssSelector("[data-qa-file=\'UICheckbox\'][class=\'ui-checkbox \']")).click();
+        driver.findElement(By.xpath("//div[@id='form-application']/div[2]/div/form/div/div[5]/div/div[2]/div/div/div/div/label")).click();
+        String maxPriceMsk = driver.findElement(By.cssSelector("[data-qa-file=\'UITitle\'][class=\'ui-title ui-title_form ui-title_center ui-title_size_s MobileOperatorFormFieldTitle__title_2awZp mobileOperatorProductCalculatorSchema__amountTitle_6kgKn\']")).getText();
+        driver.findElement(By.cssSelector("[data-qa-file=\'UISelectTitle\'][class=\'ui-select__title ui-select__title_columned\']")).click();
+
+        //System.out.println(maxPriceMsk);
+        assertEquals(maxPriceMsk, maxPriceKrasnodar);
+
+
+
+
+
+    }
 }
