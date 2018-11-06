@@ -111,14 +111,27 @@ public class SecondTest extends BaseRunner {
         driver.findElement(By.cssSelector("[data-qa-file=\'UICheckbox\'][class=\'ui-checkbox \']")).click();
         driver.findElement(By.xpath("//div[@id='form-application']/div[2]/div/form/div/div[5]/div/div[2]/div/div/div/div/label")).click();
         String maxPriceMsk = driver.findElement(By.cssSelector("[data-qa-file=\'UITitle\'][class=\'ui-title ui-title_form ui-title_center ui-title_size_s MobileOperatorFormFieldTitle__title_2awZp mobileOperatorProductCalculatorSchema__amountTitle_6kgKn\']")).getText();
-        driver.findElement(By.cssSelector("[data-qa-file=\'UISelectTitle\'][class=\'ui-select__title ui-select__title_columned\']")).click();
+        //driver.findElement(By.cssSelector("[data-qa-file=\'UISelectTitle\'][class=\'ui-select__title ui-select__title_columned\']")).click();
 
         //System.out.println(maxPriceMsk);
         assertEquals(maxPriceMsk, maxPriceKrasnodar);
+    }
 
+    @Test
+    public void case3() {
+        driver.get("https://www.tinkoff.ru/mobile-operator/tariffs/");
 
+        driver.findElement(By.cssSelector("span.ui-checkbox__text-wrapper.ui-checkbox__description-wrapper")).click();
+        driver.findElement(By.cssSelector(".ui-form__row:nth-child(2) > .ui-form__field .ui-checkbox__text-wrapper")).click();
 
+        driver.findElement(By.cssSelector("[data-qa-file=\'UISelectTitle\'][class=\'ui-select__title ui-select__title_columned\']")).click();
+        driver.findElement(By.cssSelector(".ui-form__row:nth-child(1) .ui-dropdown-field-list__item:nth-child(1) .ui-dropdown-field-list__item-text")).click();
 
+        driver.findElement(By.xpath("//div[@id='form-application']/div[2]/div/form/div/div[3]/div/div[2]/div/div/div/div/div/div/div[2]")).click();
+        driver.findElement(By.cssSelector(".ui-form__row:nth-child(2) .ui-dropdown-field-list__item:nth-child(1) .ui-dropdown-field-list__item-text")).click();
 
+        String lowPric = driver.findElement(By.cssSelector("[data-qa-file=\'UITitle\'][class=\'ui-title ui-title_form ui-title_center ui-title_size_s MobileOperatorFormFieldTitle__title_2awZp mobileOperatorProductCalculatorSchema__amountTitle_6kgKn\']")).getText();
+        assertEquals(lowPric, "Общая цена: 0 \u20BD");
+        assertFalse(driver.findElement(By.cssSelector("[class=\'Button__button_ZsAp- BlockingButton-theme__button_1mhBY Button__button_relative_3aJsS Button__button_color_black_3jFBq Button__button_disabled_19Ety Button__button_rounded_1Eg4W Button__button_size_xxl_1_2X-\']")).isEnabled());
     }
 }
