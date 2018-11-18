@@ -1,3 +1,5 @@
+package test;
+
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
@@ -11,9 +13,7 @@ public class BaseRunner {
 
     @Before
     public void setUp() {
-
         driver = getDriver();
-        baseUrl = "https://moscow-job.tinkoff.ru/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 

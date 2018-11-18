@@ -1,9 +1,12 @@
+package test;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaOptions;
 
 public enum BrowsersFactory {
     chrome {
@@ -17,7 +20,8 @@ public enum BrowsersFactory {
     opera {
         public WebDriver create() {
             updateProperty("opera");
-            ChromeOptions options = new ChromeOptions();
+            OperaOptions options = new OperaOptions();
+            options.setBinary(System.getProperty("operaPath"));
             options.addArguments("--disable-notifications");
             return new OperaDriver(options);
         }

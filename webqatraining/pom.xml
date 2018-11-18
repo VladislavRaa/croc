@@ -26,7 +26,7 @@
                     <!--стратегия параллелизации-->
                     <parallel>methods</parallel>
                     <!--<parallel>classes</parallel>-->
-                    <!--<parallel>all</parallel>-->
+                    <!--<parallel>test</parallel>-->
 
                     <!--макисмальное число процессов-->
                     <forkCount>1</forkCount>
@@ -37,7 +37,7 @@
                     <!--соотношение потоков на cpu (Default true)-->
                     <perCoreThreadCount>false</perCoreThreadCount>
                     <!--макисмальное число потоков-->
-                    <threadCount>3</threadCount>
+                    <threadCount>1</threadCount>
 
                     <!--if parallel All = threadCount, classes = threadCountClasses, methods = threadCountMethods-->
                     <!--<useUnlimitedThreads>true</useUnlimitedThreads>-->
