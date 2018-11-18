@@ -21,7 +21,7 @@ public class StarterTest extends BaseRunner {
         driver.findElement(By.xpath("//*[@name='city']")).click();
         assertEquals("Необходимо указать номер телефона", driver.findElement(By.xpath("//*[contains(text(),'Необходимо указать номер телефона')]")).getText());
         driver.findElement(By.xpath("//*[contains(text(),'Выберите вакансию')]")).click();
-        assertEquals("Поле обязательное", driver.findElement(By.xpath("//*[@name=\"city\"]/../../../following-sibling::div[@class='Error__errorMessage_q8BBY']")).getText());
+        assertEquals("Поле обязательное", driver.findElement(By.xpath("//*[@name='city']/ancestor::div[@class='Row__row_AjrJL']//div[@class='Error__errorMessage_q8BBY']")).getText());
         driver.findElement(By.xpath("//*[@name='city']")).click();
         assertEquals("Поле обязательное", driver.findElement(By.xpath("//*[@role=\"listbox\"]/../following-sibling::div[@class='Error__errorMessage_q8BBY']")).getText());
     }

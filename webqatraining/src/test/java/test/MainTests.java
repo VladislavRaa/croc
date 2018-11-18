@@ -12,7 +12,7 @@ import java.time.Duration;
 import java.util.List;
 
 
-public class SecondTest extends BaseRunner {
+public class MainTests extends BaseRunner {
 
     private class Select {
         private WebElement element;
@@ -21,12 +21,12 @@ public class SecondTest extends BaseRunner {
             new WebDriverWait(driver, 5).until(d -> driver.findElements(By.xpath("//span[contains(text(),'" + name + "')]/ancestor::div[@data-qa-file='UIDropdownField']")).size() != 0);
             element = driver.findElement(By.xpath("//span[contains(text(),'" + name + "')]/ancestor::div[@data-qa-file='UIDropdownField']"));
         }
+
         private List<WebElement> getAllItems() {
             return element.findElements(By.xpath(".//div[@class='ui-dropdown-field-list__item-view ui-select__option_with-subtext_right-side']"));
         }
 
         void setItem(String text) {
-            //maximize();
             element.click();
             new WebDriverWait(driver, 5).until(d ->
                     {
@@ -41,8 +41,6 @@ public class SecondTest extends BaseRunner {
                     }
             );
         }
-
-
     }
 
     private class CheckBox {
@@ -120,15 +118,14 @@ public class SecondTest extends BaseRunner {
 
     private String getTotalPrice() {
         return driver.findElement(By.xpath("//h3[@data-qa-file='UITitle'][contains(@class,'6kgKn')]")).getText();
-
     }
 
-    public SecondTest() {
+    public MainTests() {
         baseUrl = "https://www.tinkoff.ru/mobile-operator/tariffs/";
     }
 
     @Test
-    public void case1() {
+    public void tabSwitching() {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         driver.get("https://www.google.ru/");
         driver.findElement(By.name("q")).sendKeys("мобайл тинькофф тарифы");
@@ -157,7 +154,7 @@ public class SecondTest extends BaseRunner {
     }
 
     @Test
-    public void case2() {
+    public void changeOfRegion() {
         driver.get(baseUrl);
         driver.findElement(By.cssSelector("span.MvnoRegionConfirmation__option_3mrvz.MvnoRegionConfirmation__optionAgreement_3M5qT")).click();
         assertEquals("Москва и Московская область", driver.findElement(By.cssSelector("div.MvnoRegionConfirmation__title_3WFCP")).getText());
@@ -182,11 +179,10 @@ public class SecondTest extends BaseRunner {
         new CheckBox("SMS").setActive(true);
         String maxPriceMsk = getTotalPrice();
         assertEquals(maxPriceMsk, maxPriceKrasnodar);
-
     }
 
     @Test
-    public void case3() {
+    public void notActiveButton() {
         driver.get("https://www.tinkoff.ru/mobile-operator/tariffs/");
         new Select("Интернет").setItem("0 ГБ");
         new Select("Звонки").setItem("0 минут");
