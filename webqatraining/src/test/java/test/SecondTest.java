@@ -25,44 +25,6 @@ public class SecondTest extends BaseRunner {
             return element.findElements(By.xpath(".//div[@class='ui-dropdown-field-list__item-view ui-select__option_with-subtext_right-side']"));
         }
 
-        /*private boolean isMaximized() {
-            return getAllItems().get(0).isDisplayed();
-        }
-
-        private void maximize() {
-            if (!isMaximized()) {
-                element.click();
-                new WebDriverWait(driver, 5).until(d -> isMaximized());
-            }
-        }
-
-        private void minimize() {
-            if (isMaximized()) {
-                element.click();
-                new WebDriverWait(driver, 5).until(d -> !isMaximized());
-            }
-        }
-
-        List<String> getAllItemsText() {
-            List<String> result = new ArrayList<>();
-            List<WebElement> els = getAllItems();
-            maximize();
-            for (WebElement el : els) {
-                result.add(el.getText());
-            }
-            minimize();
-            return result;
-        }
-
-        String getCurrentItemText() {
-            return element.findElement(By.xpath("//div[@class='ui-select__title-flex']")).getText();
-        }
-
-        void setItem(int index) {
-            maximize();
-            getAllItems().get(index).click();
-        }*/
-
         void setItem(String text) {
             //maximize();
             element.click();
@@ -151,6 +113,16 @@ public class SecondTest extends BaseRunner {
         }
     }
 
+    private void ChangeRegion(String region) {
+        driver.findElement(By.xpath("//div[@class='MvnoRegionConfirmation__title_3WFCP']")).click();
+        driver.findElement(By.xpath("//*[contains(text(),'" + region + "')]")).click();
+    }
+
+    private String getTotalPrice() {
+        return driver.findElement(By.xpath("//h3[@data-qa-file='UITitle'][contains(@class,'6kgKn')]")).getText();
+
+    }
+
     public SecondTest() {
         baseUrl = "https://www.tinkoff.ru/mobile-operator/tariffs/";
     }
@@ -161,7 +133,6 @@ public class SecondTest extends BaseRunner {
         driver.get("https://www.google.ru/");
         driver.findElement(By.name("q")).sendKeys("мобайл тинькофф тарифы");
         driver.findElements(By.xpath("//ul[@role='listbox']/li"));
-
         wait
                 .ignoring(StaleElementReferenceException.class)
                 .withMessage("Что-то пошло не так...")
@@ -175,7 +146,6 @@ public class SecondTest extends BaseRunner {
                     }
                     return d.getTitle().equals("мобайл тинькофф тарифы - Поиск в Google");
                 });
-
         wait.until(d -> driver.findElements(By.cssSelector("a[href*='https://www.tinkoff.ru/mobile-operator/tariffs/']")).size() > 0);
         driver.findElement(By.cssSelector("a[href*='https://www.tinkoff.ru/mobile-operator/tariffs/']")).click();
         driver.get("https://www.tinkoff.ru/mobile-operator/tariffs/");
@@ -194,27 +164,25 @@ public class SecondTest extends BaseRunner {
         driver.navigate().refresh();
         assertEquals("Москва и Московская область", driver.findElement(By.cssSelector("div.MvnoRegionConfirmation__title_3WFCP")).getText());
 
-        String priceMsk = driver.findElement(By.xpath("//h3[@data-qa-file='UITitle'][contains(@class,'6kgKn')]")).getText();
-        driver.findElement(By.xpath("//div[@class='MvnoRegionConfirmation__title_3WFCP']")).click();
-        driver.findElement(By.xpath("//*[contains(text(),'Краснодар')]")).click();
+        String priceMsk = getTotalPrice();
+        ChangeRegion("Краснодар");
         driver.navigate().refresh();
-        String priceKrasnodar = driver.findElement(By.xpath("//h3[@data-qa-file='UITitle'][contains(@class,'6kgKn')]")).getText();
+        String priceKrasnodar = getTotalPrice();
         assertNotEquals(priceKrasnodar, priceMsk);
 
         new Select("Интернет").setItem("Безлимитны");
         new Select("Звонки").setItem("Безлимитны");
         new CheckBox("Режим модема").setActive(true);
         new CheckBox("SMS").setActive(true);
-        String maxPriceKrasnodar = driver.findElement(By.xpath("//h3[@data-qa-file='UITitle'][contains(@class,'6kgKn')]")).getText();
-
-        driver.findElement(By.xpath("//div[@class='MvnoRegionConfirmation__title_3WFCP']")).click();
-        driver.findElement(By.xpath("//*[contains(text(),'Москва')]")).click();
+        String maxPriceKrasnodar = getTotalPrice();
+        ChangeRegion("Москва");
         new Select("Интернет").setItem("Безлимитны");
         new Select("Звонки").setItem("Безлимитны");
         new CheckBox("Режим модема").setActive(true);
         new CheckBox("SMS").setActive(true);
-        String maxPriceMsk = driver.findElement(By.xpath("//h3[@data-qa-file='UITitle'][contains(@class,'6kgKn')]")).getText();
+        String maxPriceMsk = getTotalPrice();
         assertEquals(maxPriceMsk, maxPriceKrasnodar);
+
     }
 
     @Test
@@ -227,8 +195,7 @@ public class SecondTest extends BaseRunner {
         new CheckBox("Музыка").setActive(false);
         new CheckBox("Видео").setActive(false);
         new CheckBox("SMS").setActive(false);
-        String lowPrice = driver.findElement(By.xpath("//div[@class='ui-form__field ui-form__field_title']/h3")).getText();
-        assertEquals(lowPrice, "Общая цена: 0 \u20BD");
+        assertEquals(getTotalPrice(), "Общая цена: 0 \u20BD");
         assertTrue(new Button("Далее").isEnable());
     }
 }
