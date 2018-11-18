@@ -35,17 +35,17 @@ public class TinkoffMobileOperatorPageTest extends BaseRunner{
         tinkoffMobile.assertRegion("Москва");
         String priceMsk = tinkoffMobile.getTotalPrice();
         tinkoffMobile
-                .changeRegion("Краснода")
+                .changeRegion("Краснодар")
                 .refresh();
         String priceKrasnodar = tinkoffMobile.getTotalPrice();
         assertNotEquals(priceKrasnodar, priceMsk);
-        tinkoffMobile.setInternet("Безлимитны")
+        tinkoffMobile.setInternet("Безлимитный")
                 .setMinutes("Безлимитны")
                 .setModem(true)
                 .setUnlimitedSMS(true);
         String maxPriceKrasnodar = tinkoffMobile.getTotalPrice();
         tinkoffMobile.changeRegion("Москва");
-        tinkoffMobile.setInternet("Безлимитны")
+        tinkoffMobile.setInternet("Безлимитный")
                 .setMinutes("Безлимитны")
                 .setModem(true)
                 .setUnlimitedSMS(true);
