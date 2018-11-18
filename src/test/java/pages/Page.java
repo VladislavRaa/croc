@@ -62,8 +62,9 @@ public class Page {
         driver.switchTo().window(driver.getWindowHandles().iterator().next());
     }
 
-    public void refresh() {
+    public Page refresh() {
         driver.navigate().refresh();
         logger.info("Обновение срнаницы");
+        return this;
     }
 }
