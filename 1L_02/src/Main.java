@@ -21,7 +21,7 @@ public class Main {
     }
 
     public static boolean isМowels(Character inputStr) {
-        char[] patern = {'a', 'e', 'i', 'o', 'u'};
+        char[] patern = {'a', 'e', 'i', 'o', 'u', 'y'};
         for (char i : patern) {
             if (inputStr.equals(i)) {
                 return true;
