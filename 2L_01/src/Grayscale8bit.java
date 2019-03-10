@@ -22,7 +22,7 @@ class Grayscale8bit implements ColorModel {
         }
     }
 
-    public int[] toRGB() {
+    public final int[] toRGB() {
         return new int[]{this.grayScale, this.grayScale, this.grayScale};
     }
 

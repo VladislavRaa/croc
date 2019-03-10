@@ -23,7 +23,7 @@ class HSV implements ColorModel {
         this.value = value;
     }
 
-    public int[] get() {
+    public final int[] get() {
         return new int[]{this.hue, this.saturation, this.value};
     }
 
@@ -31,7 +31,7 @@ class HSV implements ColorModel {
         return new int[]{x * 255 / 100, y * 255 / 100, z * 255 / 100};
     }
 
-    public int[] toRGB() {
+    public final int[] toRGB() {
         int hI = (this.hue / 60) % 6;
         int vMin = ((100 * this.saturation) * this.value) / 100;
         int koefA = (this.saturation - vMin) * (hI % 6) / 60;
@@ -55,7 +55,8 @@ class HSV implements ColorModel {
                 throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
         }
     }
-    public StringBuilder print(){
-        return new StringBuilder("HSV: (" + this.hue + "," + this.saturation + "," + this.value + ")");
+
+    public StringBuilder print() {
+        return new StringBuilder("HSV(hue: " + this.hue + ", saturation: " + this.saturation + ", value: " + this.value + ")");
     }
 }

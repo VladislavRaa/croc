@@ -17,7 +17,7 @@ class RGB24bit implements ColorModel {
         this.blue = blue;
     }
 
-    public int[] get() {
+    public final int[] get() {
         return new int[]{this.red, this.green, this.blue};
     }
 
@@ -27,7 +27,7 @@ class RGB24bit implements ColorModel {
         }
     }
 
-    public int[] toRGB() {
+    public final int[] toRGB() {
         return new int[]{this.red, this.green, this.blue};
     }
 

@@ -21,9 +21,6 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             points.add(new Point(scanner.nextDouble(), scanner.nextDouble()));
         }
-        for (Point s : points) {
-            System.out.println(s.x + " " + s.y);
-        }
         System.out.println(getArea(points));
     }
 }
