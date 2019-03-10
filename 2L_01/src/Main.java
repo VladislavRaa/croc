@@ -1,14 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-        /*Grayscale8bit a = new Grayscale8bit(100);
-        Grayscale8bit b = new Grayscale8bit(100);
-        a.toRGB();
-        ColorPalette zzz = new ColorPalette();
-        ColorModel t = new Grayscale8bit(100);
-        ColorModel x = new RGB24bit(1, 1, 100);
-        ColorModel d = new HSV(4,3,4);*/
-        //System.out.println(a.toRGB());
-
         ColorModel x = new RGB24bit(23, 55, 100);
         ColorModel x1 = new HSV(360, 30, 7);
         ColorModel x2 = new HSV(6, 23, 100);
@@ -30,7 +21,6 @@ public class Main {
 
         ColorModel kk = new HSV(19, 0, 6);
 
-
-        System.out.println(ColorPalette.d_rgb(kk).print());
+        System.out.println(ColorPalette.findClosestColor(kk).print());
     }
 }

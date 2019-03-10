@@ -33,7 +33,7 @@ class ColorPalette {
         return Math.sqrt(Math.pow((drObj1 - drObj2), 2) + Math.pow((dgObj1 - dgObj2), 2) + Math.pow((dbObj1 - dbObj2), 2));
     }
 
-    static ColorModel d_rgb(ColorModel obj) {
+    static ColorModel findClosestColor(ColorModel obj) {
         ColorModel closestColor;
         double deltaColor = proximityMetric(obj, palette[0]);
         int result = 0;
