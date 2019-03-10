@@ -21,6 +21,6 @@ public class Main {
 
         ColorModel kk = new HSV(19, 0, 6);
 
-        System.out.println(ColorPalette.findClosestColor(kk).print());
+        System.out.println(ColorPalette.findClosestColor(kk).toString());
     }
 }

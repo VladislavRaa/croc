@@ -1,4 +1,4 @@
-class HSV implements ColorModel {
+final class HSV implements ColorModel {
     private int hue; //0 .. 360
     private int saturation; // 0 .. 100
     private int value; // 0 .. 100
@@ -56,7 +56,8 @@ class HSV implements ColorModel {
         }
     }
 
-    public StringBuilder print() {
-        return new StringBuilder("HSV(hue: " + this.hue + ", saturation: " + this.saturation + ", value: " + this.value + ")");
+    @Override
+    public String toString() {
+        return "HSV(hue: " + this.hue + ", saturation: " + this.saturation + ", value: " + this.value + ")";
     }
 }

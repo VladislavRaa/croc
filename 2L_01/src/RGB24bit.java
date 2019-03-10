@@ -1,4 +1,4 @@
-class RGB24bit implements ColorModel {
+final class RGB24bit implements ColorModel {
     private int red;
     private int green;
     private int blue;
@@ -31,7 +31,8 @@ class RGB24bit implements ColorModel {
         return new int[]{this.red, this.green, this.blue};
     }
 
-    public StringBuilder print() {
-        return new StringBuilder("RGB: (" + this.red + "," + this.green + "," + this.blue + ")");
+    @Override
+    public String toString() {
+        return "RGB: (" + this.red + ", " + this.green + ", " + this.blue + ")";
     }
 }

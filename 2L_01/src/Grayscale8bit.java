@@ -1,4 +1,4 @@
-class Grayscale8bit implements ColorModel {
+final class Grayscale8bit implements ColorModel {
 
     private int grayScale;
 
@@ -26,8 +26,9 @@ class Grayscale8bit implements ColorModel {
         return new int[]{this.grayScale, this.grayScale, this.grayScale};
     }
 
-    public StringBuilder print() {
-        return new StringBuilder("grayScale:" + this.grayScale);
+    @Override
+    public String toString() {
+        return "grayScale: " + this.grayScale;
 
     }
 }

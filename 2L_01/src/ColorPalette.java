@@ -1,9 +1,3 @@
-interface ColorModel {
-    int[] toRGB();
-
-    StringBuilder print();
-}
-
 class ColorPalette {
     //набора цветов фиксированного размера
     private static ColorModel[] palette = new ColorModel[100];
@@ -44,7 +38,6 @@ class ColorPalette {
                 result = i;
             }
         }
-        //System.out.println("result: " + deltaColor);
         return palette[result];
     }
 
@@ -53,24 +46,4 @@ class ColorPalette {
             throw new IndexOutOfBoundsException("Maximum size of a palette of 100 elements");
         }
     }
-
-    //private static ArrayList<ColorModel> p = new ArrayList<ColorModel>();
-    /*void add(ColorModel obj) {
-            p.add(obj);
-        }*/
-
-    /*static ColorModel d_rgb__(ColorModel obj) {
-        ColorModel closestColor;
-        double deltaColor = proximityMetric(obj, p.get(0));
-        int result = 0;
-        for (int i = 0; i < p.size(); i++) {
-            System.out.println(proximityMetric(obj, p.get(i)));
-            if (proximityMetric(obj, p.get(i)) < deltaColor) {
-                deltaColor = proximityMetric(obj, p.get(i));
-                result = i;
-            }
-        }
-        System.out.println("result: " + deltaColor);
-        return p.get(result);
-    }*/
 }
