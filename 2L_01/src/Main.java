@@ -9,7 +9,7 @@ public class Main {
         ColorModel x6 = new RGB24bit(7, 156, 6);
         ColorModel x7 = new Grayscale8bit(65);
 
-        ColorPalette palette = new ColorPalette();
+        ColorPalette palette = new ColorPalette(100);
         palette.add(x);
         palette.add(x1);
         palette.add(x2);
@@ -19,8 +19,8 @@ public class Main {
         palette.add(x6);
         palette.add(x7);
 
-        ColorModel kk = new HSV(19, 0, 6);
+        ColorModel kk = new HSV(1, 1, 1);
 
-        System.out.println(ColorPalette.findClosestColor(kk).toString());
+        System.out.println(palette.findClosestColor(kk).toString());
     }
 }
