@@ -44,7 +44,7 @@ class ColorPalette {
                 result = i;
             }
         }
-        System.out.println("result: " + deltaColor);
+        //System.out.println("result: " + deltaColor);
         return palette[result];
     }
 
