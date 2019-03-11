@@ -1,18 +1,20 @@
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        Tree test = new Tree();
+
+        test.createRoot(777, "A");
+        test.addLeaf(test.getParent(), 1, "B");
+        test.addChildren(test.getParent(),2, "C");
+        test.printParent(test.getParent());
+
+
+
+
+
+
     }
 
-    public class A {
 
-    }
-
-    public class B extends A{
-
-    }
-
-    public class C extends B {
-
-    }
 }
