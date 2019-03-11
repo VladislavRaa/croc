@@ -2,7 +2,7 @@ public class Main {
 
     public static void main(String[] args) {
         Tree test = new Tree();
-        createHierarchy(3, 3,test);
+        createHierarchy(3, 3, test);
     }
 
     public static void createHierarchy(int deep, int width, Tree tree) {
@@ -11,7 +11,7 @@ public class Main {
         int k = 1;
         tree.createRoot(0, "A");
         for (int i = 0; i < width; i++) {
-            tree.addChildren(tree.getParent(),i, patern[k].toString() + " " + i);
+            tree.addChildren(tree.getParent(), i, patern[k].toString() + " " + i);
         }
 
         tree.NextToFirsdChild(tree.getParent());
@@ -19,7 +19,7 @@ public class Main {
 
         k++;
         for (int i = 0; i < width; i++) {
-            tree.addChildren(tree.getParent(),i + width, patern[k].toString());
+            tree.addChildren(tree.getParent(), i + width, patern[k].toString());
         }
 
         tree.setParent(tree.next(tree.getParent()));
@@ -27,9 +27,8 @@ public class Main {
 
         k++;
         for (int i = 0; i < width; i++) {
-            tree.addChildren(tree.getParent(),i + width, patern[k].toString());
+            tree.addChildren(tree.getParent(), i + width, patern[k].toString());
         }
-
 
 
     }

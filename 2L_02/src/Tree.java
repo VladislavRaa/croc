@@ -112,13 +112,12 @@ public class Tree {
         return obj.parentNode.children.get(1);
     }
 
-
     public void setParent(Node obj) {
         this.parent = obj;
     }
 
     public Node NextToFirsdChild(Node obj) {
-        if (obj.children.isEmpty()){
+        if (obj.children.isEmpty()) {
             return null;
         }
         setParent(obj.children.get(0));
@@ -128,7 +127,6 @@ public class Tree {
     public Node BackToFirsdChild(Node obj) {
         return obj.children.get(0);
     }
-
 
 
     public void itter(Node obj) {
