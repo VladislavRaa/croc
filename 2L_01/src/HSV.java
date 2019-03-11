@@ -34,7 +34,7 @@ final class HSV implements ColorModel {
     public final int[] toRGB() {
         int hI = (this.hue / 60) % 6;
         int vMin = ((100 * this.saturation) * this.value) / 100;
-        int koefA = (this.saturation - vMin) * (hI % 6) / 60;
+        int koefA = (this.value - vMin) * (hue % 60) / 60;
         int vInc = vMin + koefA;
         int vDec = this.saturation - koefA;
 
