@@ -103,7 +103,6 @@ public class Tree {
         return null;
     }
 
-
     public Node next(Node obj) {
         /*if(obj.parentNode.children.iterator().hasNext()) {
             return obj.parentNode.children.iterator().next();

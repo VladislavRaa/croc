@@ -29,8 +29,5 @@ public class Main {
         for (int i = 0; i < width; i++) {
             tree.addChildren(tree.getParent(), i + width, patern[k].toString());
         }
-
-
     }
-
 }
