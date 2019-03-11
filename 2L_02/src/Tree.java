@@ -16,7 +16,8 @@ public class Tree {
         private ArrayList<Node> children;
         private int capacity;
 
-        Node(){}
+        Node() {
+        }
 
         Node(int time, String nameOfDepartment) {
             this.name = nameOfDepartment;
@@ -38,9 +39,7 @@ public class Tree {
     public Node addChildren(Node parent, int time, String nameOfDepartment) {
         Node child = new Node(time, nameOfDepartment);
         parent.capacity += 1;
-
         child.parentNode = this.parent;
-
         this.parent.children.add(child);
         return this.parent;
     }
@@ -60,6 +59,10 @@ public class Tree {
         return this.parent;
     }
 
+    public String getParentName() {
+        return this.parent.name;
+    }
+
     public Node getRoot() {
         return this.root;
     }
@@ -73,10 +76,10 @@ public class Tree {
     }
 
     void printChildren() {
-        for(Node i : getParent().children) {
+        for (Node i : getParent().children) {
             System.out.println("name: " + i.name + " time: " + i.time);
         }
-        System.out.println("-----end-------");
+        System.out.println("-----end-----");
     }
 
     public int count(Node obj) {
@@ -84,11 +87,52 @@ public class Tree {
     }
 
     void printParent(Node obj) {
-        System.out.println(obj.parentNode.name + " is parent: " +  obj.name);
+        System.out.println(obj.parentNode.name + " is parent: " + obj.name);
     }
 
+    public void printNextToChildren(Node obj) {
+        for (Node i : obj.parentNode.children) {
+            System.out.println(i.name);
+        }
+    }
+
+    public Node NextToChildren(Node obj) {
+        for (Node i : obj.parentNode.children) {
+            return i;
+        }
+        return null;
+    }
+
+
+    public Node next(Node obj) {
+        /*if(obj.parentNode.children.iterator().hasNext()) {
+            return obj.parentNode.children.iterator().next();
+        } else
+            return null;*/
+        return obj.parentNode.children.get(1);
+    }
+
+
+    public void setParent(Node obj) {
+        this.parent = obj;
+    }
+
+    public Node NextToFirsdChild(Node obj) {
+        if (obj.children.isEmpty()){
+            return null;
+        }
+        setParent(obj.children.get(0));
+        return this.parent;
+    }
+
+    public Node BackToFirsdChild(Node obj) {
+        return obj.children.get(0);
+    }
+
+
+
     public void itter(Node obj) {
-        for(Node i : obj.children) {
+        for (Node i : obj.children) {
             System.out.print(i.time + " ");
             if (!i.children.isEmpty()) {
                 itter(i);
