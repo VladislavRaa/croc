@@ -195,7 +195,7 @@ public class Tree {
 
     public int getMinTime(){
         Collections.sort(this.times);
-        return this.times.get(0);
+        return this.times.get(this.times.size() - 1);
     }
 }
 
