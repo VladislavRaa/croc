@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Tree {
     private Node root; // больше не трогать
@@ -6,7 +8,7 @@ public class Tree {
     private StringBuilder result = new StringBuilder();
     private int count = 0;
     private int sum = 0;
-
+    List<Integer> times = new ArrayList<Integer>();
     Tree() {
         this.root = new Node();
         this.parent = new Node();
@@ -102,7 +104,6 @@ public class Tree {
         }
     }
 
-
     public StringBuilder parentsToString(Node obj) { //
         if (obj.parentNode != null) {
             this.result.insert(this.count, "[n:" + obj.parentNode.name + " t:" + obj.parentNode.time + "], ");
@@ -136,7 +137,7 @@ public class Tree {
         return null;
     }
 
-    static Node next(Node obj, int count) {                             //нужно переделть!!!!
+    public Node next(Node obj, int count) {                             //нужно переделть!!!!
         /*if(obj.parentNode.children.iterator().hasNext()) {
             return obj.parentNode.children.iterator().next();
         } else
@@ -182,12 +183,19 @@ public class Tree {
                 System.out.println(" ");
                 System.out.print(parentsToString(i));
                 temp += parentsSum(i) + i.time;
-                System.out.print("(n:" + i.name + " t:" + i.time + "); " + "sum of time: " + temp);
+                this.times.add(temp);
+                System.out.print("(n:" + i.name + " t:" + i.time + "); " + "sum of time: " + temp );
                 temp = 0;
                 cleanResultString();
                 cleanResultSum();
             }
         }
+        System.out.println();
+    }
+
+    public int getMinTime(){
+        Collections.sort(this.times);
+        return this.times.get(0);
     }
 }
 

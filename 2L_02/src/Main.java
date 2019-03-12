@@ -5,6 +5,7 @@ public class Main {
         createHierarchy(3, 4, test);
         //test.printRoot();
         test.itter(test.getRoot());
+        System.out.println("smallest time: " + test.getMinTime());
     }
 
     public static void createHierarchy(int deep, int width, Tree tree) {
@@ -36,7 +37,7 @@ public class Main {
         for (int i = 0; i < width; i++) {
             tree.addChildren(tree.getParent(), i + k, patern[k].toString() + i);
         }
-
+        //C
         tree.NextToFirstChild(tree.getParent());
         k++;
         for (int i = 0; i < width; i++) {
