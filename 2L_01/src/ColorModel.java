@@ -1,0 +1,3 @@
+interface ColorModel {
+    int[] toRGB();
+}
