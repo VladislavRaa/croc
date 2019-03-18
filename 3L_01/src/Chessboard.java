@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Chessboard {
     private int x;
     private int y;
@@ -19,7 +17,7 @@ public class Chessboard {
     }
 
     public int[] getXY() {
-        return new int[] {this.x, this.y};
+        return new int[]{this.x, this.y};
     }
 
     private void check(int x, int y) {
@@ -36,7 +34,7 @@ public class Chessboard {
         int oY = array.charAt(1) - ASCII_CONST_NUMBERS;
 
         check(oX, oY);
-        return new int[] {oX, oY};
+        return new int[]{oX, oY};
     }
 
     public String convertToStr(int x, int y) {
@@ -53,7 +51,7 @@ public class Chessboard {
         }
     }
 
-    private boolean checkFromTo(String from, String to) throws MyExceptionClass{
+    private boolean checkFromTo(String from, String to) throws MyExceptionClass {
         if ((Math.abs(convertToInt(to)[0] - convertToInt(from)[0]) == 1) && (Math.abs(convertToInt(to)[1] - convertToInt(from)[1]) == 2)) {
             return true;
         }
@@ -73,7 +71,7 @@ public class Chessboard {
             System.out.println(e.getMessage());
         }
     }
-    
+
     @Override
     public String toString() {
         return Character.toString((char) (ASCII_CONST_LETTERS + this.x)) + (this.y + 1);

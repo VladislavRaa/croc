@@ -8,7 +8,7 @@ public class Main {
         String[] mas2 = {"g8", "e7", "c8"};
         //test.checkArray(mas);
         //test.checkArray(mas1);
-        test.checkArray(mas2);
+        test.checkArray(mas1);
         //System.out.println(test.toString());
     }
 }
