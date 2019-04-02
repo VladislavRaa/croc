@@ -1,20 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class CallCenter {
     public float countLog(ArrayList<String> log) {
         String[] tempString;
-        String pattern = "[^0-9]";
         float sum = 0;
-        int maxOperator = 0;
-        int tempMaxOperator = 0;
+        HashSet<String> operators = new HashSet<String>();
         for (String operator : log) {
             tempString = operator.split(",");
-            tempMaxOperator = Integer.valueOf(tempString[2].replaceAll(pattern, ""));
-            if (tempMaxOperator > maxOperator) {
-                maxOperator = tempMaxOperator;
-            }
+            operators.add(tempString[2]);
             sum += Integer.valueOf(tempString[1]) - Integer.valueOf(tempString[0]);
         }
-        return Math.round(sum / maxOperator);
+        return Math.round(sum / operators.size());
     }
 }
