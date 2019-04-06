@@ -1,27 +1,29 @@
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ClassPath {
     private ArrayDeque<String> resultPath = new ArrayDeque<String>();
-
     public String getPath(String path) {
         String[] tempString = path.split("/");
         for (String i : tempString) {
-            if (i.equals(".")) {
-                continue;
-            } else if (i.equals("..")) {
-                resultPath.poll();
-            } else {
-                resultPath.push(i);
+            switch (i) {
+                case ".":
+                    continue;
+                case "..":
+                    if (resultPath.isEmpty()) {
+                        resultPath.push("..");
+                    } else {
+                        resultPath.pop();
+                    } break;
+                default:
+                    resultPath.push(i);
+                    break;
             }
         }
-        StringBuilder res = new StringBuilder();
-        res.append("../");
+        StringBuilder result = new StringBuilder();
         while (!resultPath.isEmpty()) {
             String next = resultPath.poll();
-            res.append(next + "/");
+            result.insert(0, next + "/");
         }
-        return res.toString();
+        return result.toString();
     }
 }
