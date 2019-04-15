@@ -7,8 +7,10 @@ public class TicketGenerator extends Thread {
 
     @Override
     public void run() {
-        while (!showtime.getFreeSeats().isEmpty()) {
-            showtime.bookSeat(new Seat((int)(Math.random() * 5 + 1),(int)(Math.random() * 5 + 1)));
+        synchronized (showtime) {
+            while (!showtime.getFreeSeats().isEmpty()) {
+                showtime.bookSeat(new Seat((int) (Math.random() * 2 + 1), (int) (Math.random() * 2 + 1)));
+            }
         }
     }
 }
