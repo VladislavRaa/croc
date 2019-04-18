@@ -1,38 +1,64 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CallCenter extends Thread {
-    private static ConcurrentHashMap<String, Integer> operators = new ConcurrentHashMap<>();
-    private List<String> log;
+public class CallCenter implements Runnable {
+    private static volatile ConcurrentHashMap<String, Integer> operators = new ConcurrentHashMap<>();
+    private static volatile Iterator iterator;
+    private final static int MAX_THREADS = 7;
+    private static ArrayList<Thread> arrThreads = new ArrayList<>();
 
-    CallCenter(List<String> log) {
-        this.log = log;
+    public String getBestWorker(List<String> log) throws InterruptedException {
+        iterator = log.iterator();
+        for (int i = 0; i < MAX_THREADS; i++) {
+            Thread currentThread = new Thread(new CallCenter());
+            currentThread.start();
+            arrThreads.add(currentThread);
+        }
+        for (int i = 0; i < MAX_THREADS; i++) {
+            arrThreads.get(i).join();
+        }
+        return startBefore();
     }
 
-    public static synchronized void getBestWorker(List<String> log) {
-        String[] tempString;
-        for (String operator : log) {
-            tempString = operator.split(",");
-            if (operators.containsKey(tempString[2])) {
-                operators.put(tempString[2], operators.get(tempString[2]) + 1);
-            } else {
-                operators.put(tempString[2], 1);
+    private static void getLog(String pathOfLog) {
+        System.out.println(Thread.currentThread().getName());
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathOfLog))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] tempString = line.split(",");
+                synchronized (operators) {
+                    if (operators.containsKey(tempString[2])) {
+                        operators.put(tempString[2], operators.get(tempString[2]) + 1);
+                    } else {
+                        operators.put(tempString[2], 1);
+                    }
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public static String beforeAllThread() {
+    private String startBefore() {
         ArrayList<Integer> byTotalCall = new ArrayList<>(operators.values());
         byTotalCall.sort(Integer::compare);
-        return getKeyFromValue(operators, byTotalCall.get(byTotalCall.size() - 1));
+        StringBuilder result = new StringBuilder();
+        int count = byTotalCall.size() - 1;
+        int size = byTotalCall.size() - 1;
+        while (byTotalCall.get(size).equals(byTotalCall.get(count))) {
+            result.append(getKeyFromValue(operators, byTotalCall.get(count))).append(" ");
+            count--;
+        }
+        return result.toString();
     }
 
     private static String getKeyFromValue(Map hm, Object value) {
         for (Object o : hm.keySet()) {
             if (hm.get(o).equals(value)) {
-                return o.toString();
+                String resultString = o.toString();
+                hm.remove(o);
+                return resultString;
             }
         }
         return null;
@@ -40,6 +66,8 @@ public class CallCenter extends Thread {
 
     @Override
     public void run() {
-        getBestWorker(this.log);
+        if (iterator.hasNext()) {
+            getLog(iterator.next().toString());
+        }
     }
 }
