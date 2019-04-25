@@ -1,15 +1,13 @@
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class User {
-    private ArrayList<String> watched;
+    private HashSet<String> watched = new HashSet<String>();
     private double score;
-
     User(String films) {
-        watched = new ArrayList<>();
-        for (String film : films.split(",")) {
-            watched.add(film);
-        }
+       for (String film : films.split(",")) {
+           watched.add(film);
+       }
     }
 
     public void setScore(double score) {
@@ -24,7 +22,7 @@ public class User {
         return watched.size();
     }
 
-    public ArrayList<String> getWatched() {
+    public HashSet<String> getWatched() {
         return watched;
     }
 

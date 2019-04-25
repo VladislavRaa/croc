@@ -3,8 +3,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class PlacesForKisses {
     private final static int TOP = 3;
@@ -13,7 +13,7 @@ public class PlacesForKisses {
     private static HashMap<String, String> allFilms = new HashMap<>();
     private static ArrayList<User> users = new ArrayList<User>();
     private static HashMap<String, Integer> raitingList = new HashMap<>();
-
+    private static Iterator iter = users.iterator();
     public PlacesForKisses(String filmsList, String usersList) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filmsList))) {
             String line;
@@ -43,18 +43,22 @@ public class PlacesForKisses {
     public void debug(User user) {
         setCurrentScore(user);
         sortUsersByScore();
+        for (User u : users) {
+            System.out.println(u.getScore() + " " + u.getWatched().toString());
+        }
         filterByScore(user);
+        System.out.println(raitingList.toString());
     }
 
     private double calcByScore(User someUser, User currentUser) {
         double score = 0;
         final double percent = 100.0 / currentUser.getAmount();
-        for (int i = 0; i < someUser.getAmount(); i++) {
-            for (int j = 0; j < currentUser.getAmount(); j++) {
+        for (String i : someUser.getWatched()) {
+            for (String j : currentUser.getWatched()) {
                 if (currentUser.equals(someUser)) {
                     continue;
                 }
-                if (currentUser.getWatched().get(j).equals(someUser.getWatched().get(i))) {
+                if (i.equals(j)) {
                     score += percent;
                 }
             }
@@ -63,9 +67,10 @@ public class PlacesForKisses {
     }
 
     private void filterByScore(User user) {
+
         for (User someUser : users) {
             for (String i : someUser.getWatched()) {
-                if (someUser.getScore() >= ratingDOWN && someUser.getScore() <= ratingUP) {
+                if (someUser.getScore() >= ratingDOWN && someUser.getScore() <= ratingUP && !user.getWatched().contains(i)) {
                     if (raitingList.containsKey(i)) {
                         raitingList.put(i, raitingList.get(i) + 1);
                     } else {
@@ -74,24 +79,20 @@ public class PlacesForKisses {
                 }
             }
         }
-        for (String i : user.getWatched()) {
-            raitingList.remove(i);
-        }
+
         if (raitingList.size() < TOP && ratingDOWN >= 0) {
             ratingDOWN -= 10;
             ratingUP -= 10;
-            filterByScore(user);
+            //filterByScore(user);
         } else {
             for (Map.Entry<String, Integer> entry : raitingList.entrySet()) {
-                System.out.println(entry.getKey() + " " + entry.getValue());
+                //System.out.println(entry.getKey() + " " + entry.getValue());
             }
+
         }
     }
 
     private void sortUsersByScore() {
         users.sort((o1, o2) -> Double.compare(o2.getScore(), o1.getScore()));
-        for (User i : users) {
-            System.out.println(i.getScore() + " : " + i.getWatched().toString());
-        }
     }
 }
