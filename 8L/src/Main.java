@@ -7,6 +7,6 @@ public class Main {
         String film = "/Users/vladislavraa/croc/8L/films.txt";
         String users = "/Users/vladislavraa/croc/8L/users.txt";
         PlacesForKisses plc = new PlacesForKisses(film, users);
-        plc.debug(new User("1,4,2"));
+        System.out.println(plc.runner(new User("1,4,2,7")));
     }
 }
